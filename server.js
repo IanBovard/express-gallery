@@ -16,3 +16,8 @@ const hbs = exphbs.create({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
+
+app.listen(PORT, () => {
+  //db.sequelize.sync();
+  console.log(`server running on ${PORT}`);
+});
