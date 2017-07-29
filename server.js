@@ -3,6 +3,8 @@ const express = require('express');
 const exphbs = require ('express-handlebars');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8080;
+const userRoutes = require('./routes/users');
+const pictureRoutes = require('./routes/pictures');
 
 let db = require('./models');
 let Users = db.Users;
@@ -13,11 +15,22 @@ const hbs = exphbs.create({
   extname : 'hbs'
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+
+app.use('/users', userRoutes);
+app.use('/pictures', pictureRoutes);
+
+app.get('/', (req, res) => {
+  res.render('home/index');
+});
+
 app.listen(PORT, () => {
-  //db.sequelize.sync();
+  db.sequelize.sync();
   console.log(`server running on ${PORT}`);
 });

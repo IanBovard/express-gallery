@@ -5,8 +5,7 @@ const browserSync = require('browser-sync').create();
 gulp.task('serve', function(){
   browserSync.init({
     server: {
-      baseDir: 'public',
-      index: 'index.html'
+      baseDir: 'public'
     }
   });
   gulp.watch("scss/**/*.scss", ['sass']);

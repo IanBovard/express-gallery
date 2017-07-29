@@ -1,15 +1,19 @@
+"use strict";
+
 module.exports = function(sequelize, DataTypes) {
-  var Picture = sequelize.define("Pictures", {
+  var Pictures = sequelize.define("Pictures", {
     author: DataTypes.STRING,
     link: DataTypes.STRING,
     description: DataTypes.TEXT
-  }, {
-    classMethods: {
-      associate: function(models) {
-        Picture.belongsTo(models.Users);
-      }
-    }
   });
 
-  return Picture;
+  Pictures.associate = function(models) {
+    Pictures.belongsTo(models.Users, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
+
+  return Pictures;
 };
