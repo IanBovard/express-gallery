@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
   Pictures.associate = function(models) {
     Pictures.belongsTo(models.Users, {
       foreignKey: {
+        name: 'user_id',
         allowNull: false
       }
     });

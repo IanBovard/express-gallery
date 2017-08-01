@@ -12,4 +12,12 @@ router.get('/', (req, res) =>{
   });
 });
 
+router.post('/', (req, res) =>{
+  return Users.create( {username: "Bob"} )
+  .then(users => {
+    console.log(users);
+    res.render('users/index', { users: users });
+  });
+});
+
 module.exports = router;
