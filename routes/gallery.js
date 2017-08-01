@@ -6,7 +6,7 @@ let db = require('../models');
 let Gallery = db.Galleries;
 
 router.get('/', (req, res) => {
-  return Gallery.findAll()
+  return Gallery.findAll({raw:true})
   .then(pictures => {
     res.render('gallery/index', { gallery: pictures });
   });
