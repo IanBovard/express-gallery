@@ -12,16 +12,16 @@ helpful: Livereload, Gulp for watching compiling SASS
 Create a multi-user Gallery.
 Any user should be able to access these routes:
 
-- `GET /` to view a list of gallery photos
-- `GET /gallery/:id` to see a single gallery photo
+- `GET /` to view a list of gallery photos // /index
+- `GET /gallery/:id` to see a single gallery photo // /picture
   - each gallery photo should include a link to delete this gallery photo
   - each gallery photo should include a link to edit this gallery photo
-- `GET /gallery/new` to see a "new photo" form
+- `GET /gallery/new` to see a "new photo" form // /new
   - the form fields are:
     - `author` : Text
     - `link` : Text (the image url)
     - `description` : TextArea
-- `POST /gallery` to create a new gallery photo i
+- `POST /gallery` to create a new gallery photo i /new
 - `GET /gallery/:id/edit` to see a form to *edit* a gallery photo identified by the `:id` param
   - the form fields are:
     - `author` : Text

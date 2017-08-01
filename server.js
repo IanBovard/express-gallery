@@ -4,10 +4,9 @@ const exphbs = require ('express-handlebars');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8080;
 const userRoutes = require('./routes/users');
-const pictureRoutes = require('./routes/pictures');
+const galleryRoutes = require('./routes/gallery');
 
 let db = require('./models');
-let Users = db.Users;
 
 const app = express();
 const hbs = exphbs.create({
@@ -24,7 +23,7 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use('/users', userRoutes);
-app.use('/pictures', pictureRoutes);
+app.use('/gallery', galleryRoutes);
 
 app.get('/', (req, res) => {
   res.render('home/index');
