@@ -13,5 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
+//ksdjfsd
+
   return Users;
 };
