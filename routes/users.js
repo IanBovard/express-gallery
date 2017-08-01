@@ -2,8 +2,14 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function(req, res) {
-  res.render('users/index');
+let db = require('../models');
+let Users = db.Users;
+
+router.get('/', (req, res) =>{
+  return Users.findAll()
+  .then(users => {
+    res.render('users/index', { users: users });
+  });
 });
 
 module.exports = router;

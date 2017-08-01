@@ -2,8 +2,14 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function(req, res) {
-  res.render('pictures/index');
+let db = require('../models');
+let Pictures = db.Pictures;
+
+router.get('/', (req, res) =>{
+  return Pictures.findAll()
+  .then(pictures => {
+    res.render('pictures/index', { pictures: pictures });
+  });
 });
 
 
