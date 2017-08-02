@@ -11,8 +11,8 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  console.log('working');
-  res.redirect('gallery/index');
+  console.log(req.body);
+  res.redirect('/gallery/index');
 });
 
 router.get('/', (req, res) => {
