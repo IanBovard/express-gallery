@@ -13,7 +13,7 @@ router.get('/', (req, res) =>{
 });
 
 router.post('/', (req, res) =>{
-  return Users.create( {username: "Bob"} )
+  return Users.create( {username: "Bob", password: "sandwich"} )
   .then(users => {
     console.log(users);
     res.render('users/index', { users: users });

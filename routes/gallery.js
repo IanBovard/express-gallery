@@ -3,14 +3,21 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../utilities/authenticate.js');
 
-
 let db = require('../models');
 let Gallery = db.Galleries;
+
+router.get('/login', (req, res) => {
+  res.render('gallery/login')
+});
+
+router.post('/login', (req, res) => {
+  console.log('working');
+  res.redirect('gallery/index');
+});
 
 router.get('/', (req, res) => {
   return Gallery.findAll({raw:true})
   .then(pictures => {
-    console.log("AUTH", auth);
     res.render('gallery/index', { gallery: pictures });
   })
   .catch(err => {
@@ -18,11 +25,11 @@ router.get('/', (req, res) => {
  });
 });
 
-router.get('/new', (req, res) => {
+router.get('/new', auth.isAuthenticated, (req, res) => {
   res.render('gallery/new');
 });
 
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id, {raw:true})
   .then(picture => {
@@ -52,7 +59,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/', auth.isAuthenticated, (req, res) => {
   return Gallery.create({ user_id: 1, author: req.body.author, link: req.body.link, description: req.body.description })
   .then(picture => {
     res.redirect('/gallery');
@@ -62,7 +69,7 @@ router.post('/', (req, res) => {
   });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id)
   .then(picture => {
@@ -80,7 +87,7 @@ router.put('/:id', (req, res) => {
   });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id)
   .then(picture => {
