@@ -1,6 +1,8 @@
 /*jshint esversion:6*/
 const express = require('express');
 const router = express.Router();
+const auth = require('../utilities/authenticate.js');
+
 
 let db = require('../models');
 let Gallery = db.Galleries;
@@ -8,6 +10,7 @@ let Gallery = db.Galleries;
 router.get('/', (req, res) => {
   return Gallery.findAll({raw:true})
   .then(pictures => {
+    console.log("AUTH", auth);
     res.render('gallery/index', { gallery: pictures });
   })
   .catch(err => {
