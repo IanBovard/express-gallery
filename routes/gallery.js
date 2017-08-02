@@ -6,15 +6,6 @@ const auth = require('../utilities/authenticate.js');
 let db = require('../models');
 let Gallery = db.Galleries;
 
-router.get('/login', (req, res) => {
-  res.render('gallery/login')
-});
-
-router.post('/login', (req, res) => {
-  console.log('working');
-  res.redirect('gallery/index');
-});
-
 router.get('/', (req, res) => {
   return Gallery.findAll({raw:true})
   .then(pictures => {
@@ -58,6 +49,7 @@ router.get('/:id', (req, res) => {
     res.send(err.message);
   });
 });
+
 
 router.post('/', auth.isAuthenticated, (req, res) => {
   return Gallery.create({ user_id: 1, author: req.body.author, link: req.body.link, description: req.body.description })

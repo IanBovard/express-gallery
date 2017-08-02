@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: { msg: 'Username is taken'},
       validate: {
         notEmpty: { msg: 'Incorrect Username'}
       }
