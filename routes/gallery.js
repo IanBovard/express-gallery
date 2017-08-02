@@ -5,6 +5,7 @@ const router = express.Router();
 let db = require('../models');
 let Gallery = db.Galleries;
 
+
 router.get('/', (req, res) => {
   return Gallery.findAll({raw:true})
   .then(pictures => {

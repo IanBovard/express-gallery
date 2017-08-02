@@ -23,6 +23,7 @@ app.set('view engine', 'hbs');
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+//middleware
 
 app.use('/users', userRoutes);
 app.use('/gallery', galleryRoutes);
