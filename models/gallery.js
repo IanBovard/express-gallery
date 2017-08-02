@@ -2,9 +2,27 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Galleries = sequelize.define("Galleries", {
-    author: DataTypes.STRING,
-    link: DataTypes.STRING,
-    description: DataTypes.TEXT
+    author: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Needs an author'}
+      }
+    },
+    link: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Needs an url'}
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Needs a description'}
+      }
+    }
   });
 
   Galleries.associate = function(models) {

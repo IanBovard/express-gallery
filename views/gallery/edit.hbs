@@ -1,6 +1,10 @@
+<h1>EDIT YOUR PICTURE</h1>
 <form action="/gallery/{{id}}?_method=PUT" method="POST">
-  <input type="text" name="author" placeholder="author" value="{{author}}">
-  <input type="text" name="link" placeholder="link" value="{{link}}">
-  <input type="text" name="description" placeholder="description" value="{{description}}">
+  Author:
+  <input type="text" name="author" placeholder="author" value="{{author}}"><br>
+  url:
+  <input type="text" name="link" placeholder="link" value="{{link}}"><br>
+  Description:
+  <input type="text" name="description" placeholder="description" value="{{description}}"><br>
   <button type="submit">SUBMIT</button>
 </form>
