@@ -18,9 +18,10 @@ router.get('/new', (req, res) => {
 
 router.get('/:id', (req, res) => {
   let id = req.params.id;
-  return Gallery.findById(id)
+  return Gallery.findById(id, {raw:true})
   .then(picture => {
-    res.render('gallery/picture', { gallery: pictures });
+    console.log (picture);
+    res.render('gallery/picture', picture);
   });
 });
 
