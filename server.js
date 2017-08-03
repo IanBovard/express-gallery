@@ -37,7 +37,6 @@ app.use(session({
 
 passport.use(new LocalStrategy((username, password, done) => {
   Users.findOne({where: { username: username} }).then(user => {
-    console.log(user);
     if (user === null) {
       return done(null, false, { message: 'Incorrect username'});
     }

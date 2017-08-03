@@ -5,9 +5,10 @@ const auth = require('../utilities/authenticate.js');
 
 let db = require('../models');
 let Gallery = db.Galleries;
+let User = db.Users;
 
 router.get('/', (req, res) => {
-  return Gallery.findAll({raw:true})
+  return Gallery.findAll( {where: {user_id: req.user.id}},{ raw:true })
   .then(pictures => {
     res.render('gallery/index', { gallery: pictures });
   })
@@ -27,7 +28,7 @@ router.get('/:id/edit', auth.isAuthenticated, (req, res) => {
     if (picture !== null){
       res.render('gallery/edit', picture);
     }else{
-      res.send(404, 'Page Not Found');
+      res.send(400, 'Bad Request');
     }
   })
   .catch(err => {
@@ -42,7 +43,7 @@ router.get('/:id', (req, res) => {
     if (picture !== null){
       res.render('gallery/picture', picture);
     }else{
-      res.send(404, 'Page Not Found');
+      res.send(400, 'Bad Request');
     }
   })
   .catch(err => {
@@ -50,9 +51,8 @@ router.get('/:id', (req, res) => {
   });
 });
 
-
-router.post('/', auth.isAuthenticated, (req, res) => {
-  return Gallery.create({ user_id: 1, author: req.body.author, link: req.body.link, description: req.body.description })
+router.post('/new', auth.isAuthenticated, (req, res) => {
+  return Gallery.create({ user_id: req.user.id, author: req.body.author, link: req.body.link, description: req.body.description })
   .then(picture => {
     res.redirect('/gallery');
   })
@@ -66,8 +66,7 @@ router.put('/:id', auth.isAuthenticated, (req, res) => {
   return Gallery.findById(id)
   .then(picture => {
     if (picture !== null){
-      console.log(picture);
-      picture.update( {author: req.body.author, link: req.body.link, description: req.body.description });
+      picture.update({author: req.body.author, link: req.body.link, description: req.body.description });
       return picture;
     }
   })
@@ -83,7 +82,6 @@ router.delete('/:id', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id)
   .then(picture => {
-    console.log(picture);
     picture.destroy();
     return picture;
   })
@@ -93,7 +91,7 @@ router.delete('/:id', auth.isAuthenticated, (req, res) => {
     }
   })
   .catch(err => {
-    res.send(404, 'Page Not Found');
+    res.send(400, 'Bad Request');
   });
 });
 

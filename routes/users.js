@@ -5,20 +5,23 @@ const router = express.Router();
 let db = require('../models');
 let Users = db.Users;
 
-router.get('/', (req, res) =>{
+router.get('/', (req, res) => {
   return Users.findAll()
   .then(users => {
     res.render('users/index', { users: users });
   });
 });
 
-router.post('/', (req, res) =>{
-  return Users.create( {username: "Bob", password: "sandwich"} )
+router.get('/create', (req, res) => {
+  res.render('users/create');
+});
+
+router.post('/create', (req, res) =>{
+  return Users.create( {username: req.body.username, password: req.body.password} )
   .then(users => {
-    console.log(users);
     res.render('users/index', { users: users });
   }).catch(err => {
-    res.send(400, err.message);
+    res.send(err.message);
   });
 });
 
