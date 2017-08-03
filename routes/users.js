@@ -13,10 +13,6 @@
     });
   });
 
-router.get('/:user', (req, res) => {
-  if (req.isAuthenticated){res.redirect}
-});
-
   router.get('/create', (req, res) => {
     if (req.isAuthenticated){res.redirect('/users');
   }else{

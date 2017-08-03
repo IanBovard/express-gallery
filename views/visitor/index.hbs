@@ -1,1 +1,6 @@
 <h1>Our list of users</h1>
+{{#each userlist}}
+<form action="/home/{{username}}" method="GET">
+  <button type="submit">{{username}}'s Gallery</button>
+</form>
+{{/each}}

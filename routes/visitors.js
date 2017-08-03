@@ -8,7 +8,9 @@
   let Gallery = db.Galleries;
 
   router.get('/', (req, res) => {
-    res.render('visitor/index');
+    return Users.findAll({raw:true}).then(users => {
+      res.render('visitor/index', { userlist: users });
+    });
   });
 
   router.get('/:username', (req, res) => {
@@ -25,20 +27,4 @@
     });
   });
 
-
-
-
-
-
-
-
-/*  return User.findOne( {where: {user_id: req.params.username}},{ raw:true })
-  .then(pictures => {
-    res.render('gallery/index', { gallery: pictures });
-  })
-  .catch(err => {
-   res.send(err.message);
- });
-});*/
-
-module.exports = router;
+  module.exports = router;
