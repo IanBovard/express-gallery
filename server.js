@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 8080;
 const userRoutes = require('./routes/users');
 const galleryRoutes = require('./routes/gallery');
 const authRoutes = require('./routes/auth');
+const visitorRoutes = require('./routes/visitors');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -65,6 +66,8 @@ passport.deserializeUser((userId, cb) => {
 app.use('/users', userRoutes);
 app.use('/gallery', galleryRoutes);
 app.use('/', authRoutes);
+app.use('/home', visitorRoutes);
+
 
 
 app.listen(PORT, () => {
