@@ -7,7 +7,7 @@ let db = require('../models');
 let Gallery = db.Galleries;
 let User = db.Users;
 
-router.get('/', (req, res) => {
+router.get('/', auth.isAuthenticated, (req, res) => {
   return Gallery.findAll( {where: {user_id: req.user.id}},{ raw:true })
   .then(pictures => {
     res.render('gallery/index', { gallery: pictures });
@@ -36,7 +36,7 @@ router.get('/:id/edit', auth.isAuthenticated, (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id, {raw:true})
   .then(picture => {

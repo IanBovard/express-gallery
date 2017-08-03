@@ -4,9 +4,11 @@ const exphbs = require ('express-handlebars');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const PORT = process.env.PORT || 8080;
+
 const userRoutes = require('./routes/users');
 const galleryRoutes = require('./routes/gallery');
 const authRoutes = require('./routes/auth');
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
