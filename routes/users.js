@@ -14,7 +14,7 @@
   });
 
   router.get('/create', (req, res) => {
-    if (req.isAuthenticated){res.redirect('/users');
+    if (req.user){res.redirect('/users');
   }else{
     res.render('users/create');
   }

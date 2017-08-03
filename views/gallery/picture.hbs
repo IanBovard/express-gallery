@@ -5,3 +5,9 @@
   <div class="link">{{link}}</div>
   <div class="description">{{description}}</div>
 </div>
+<form action="/gallery/{{id}}/edit">
+  <button type="submit">edit</button>
+</form>
+<form action="/gallery/{{id}}?_method=DELETE" method="POST">
+  <button type="submit">delete</button>
+</form>
