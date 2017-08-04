@@ -12,21 +12,4 @@
       res.render('users/index', { users: users });
     });
   });
-
-  router.get('/create', (req, res) => {
-    if (req.user){res.redirect('/users');
-  }else{
-    res.render('users/create');
-  }
-});
-
-  router.post('/create', (req, res) =>{
-    return Users.create( {username: req.body.username, password: req.body.password} )
-    .then(users => {
-      res.render('users/index', { users: users });
-    }).catch(err => {
-      res.send(err.message);
-    });
-  });
-
   module.exports = router;

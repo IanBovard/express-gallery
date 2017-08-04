@@ -8,15 +8,19 @@
   let Gallery = db.Galleries;
 
   router.get('/', (req, res) => {
+      res.render('visitor/index');
+  });
+
+  router.get('/userlist', (req, res) => {
     return Users.findAll({raw:true}).then(users => {
-      res.render('visitor/index', { userlist: users });
+      res.render('visitor/userlist', { userlist: users });
     });
   });
+
 
   router.get('/:username', (req, res) => {
     return Users.findOne( { where: {username: req.params.username} })
     .then(user => {
-      console.log(user);
       return Gallery.findAll( { where: {user_id: user.id} })
       .then(pictures => {
         res.render('visitor/galleries', {gallery: pictures});

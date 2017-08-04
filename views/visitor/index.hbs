@@ -1,14 +1,13 @@
 <h1>Our list of users</h1>
-{{#each userlist}}
-<form action="/home/{{username}}" method="GET">
-  <button type="submit">{{username}}'s Gallery</button>
+<form action="/main/userlist">
+  <h3>Userlist</h3>
+  <button type="submit">Userlist</button>
 </form>
-{{/each}}
-<form action="/login">
+<form action="/main/login">
   <h3>Login</h3>
   <button type="submit">Login</button>
 </form>
-<form action="/users/create">
+<form action="/main/register">
   <h3>Create an account</h3>
   <button type="submit">Create</button>
 </form>
