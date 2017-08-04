@@ -40,6 +40,7 @@ router.get('/:id', (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id, {raw:true})
   .then(picture => {
+    console.log(picture);
     if (picture !== null){
       res.render('gallery/picture', picture);
     }else{

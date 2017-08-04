@@ -1,16 +1,18 @@
-/*
+
 html {
- height: 100%,
- width: 100%
+ height: 100%;
+ width: 100%;
 }
 
 body {
- margin: 0,
- padding: 0,
- height: 100%,
- width: 100%
- //background-image: url('../assets/bg.jpg');
+ margin: 0;
+ padding: 0;
+ height: 100%;
+ width: 100%;
+ background-image: url("confectionary.png");
 }
+
+
 
 @import "partials/_reset";
 @import "partials/_clearfix";
@@ -27,8 +29,23 @@ $padding: 20px;
 }
 
 //FOR MOBILE
-@media screen and (min-width: 600px){
+@media screen and (max-width: 600px){
+  body {
+    display: flex;
+
+    // background-color: blue;
+  }
+  h1 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    font-size: 70px;
+    color: #555555;
+  }
+
+
 
 
 }
- */
+
