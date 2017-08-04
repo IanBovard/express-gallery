@@ -1,13 +1,13 @@
 <h1>THESE ARE INDIVIDUAL PICTURES!!!</h1>
 <div class="container">
-  <div>{{id}}</div>
-  <div class="author">{{author}}</div>
-  <div class="link">{{link}}</div>
-  <div class="description">{{description}}</div>
+  <div>{{picture.id}}</div>
+  <div class="author">{{picture.author}}</div>
+  <div class="link">{{picture.link}}</div>
+  <div class="description">{{picture.description}}</div>
 </div>
-<form action="/{{username}}/gallery/{{id}}/edit">
+<form action="/{{username}}/gallery/{{picture.id}}/edit">
   <button type="submit">edit</button>
 </form>
-<form action="/{{username}}/gallery/{{id}}/delete?_method=DELETE" method="POST">
+<form action="/{{username}}/gallery/{{picture.id}}/delete?_method=DELETE" method="POST">
   <button type="submit">delete</button>
 </form>

@@ -1,7 +1,7 @@
 <h1>THESE ARE {{username}}'s PICTURES!!!</h1>
 {{#each gallery}}
 <div class="container">
-  <form action="/{{username}}/gallery/{{id}}">
+  <form action="/{{../username}}/gallery/{{id}}">
     <button type="submit">{{id}}</button>
   </form>
   <div class="author">{{author}}</div>

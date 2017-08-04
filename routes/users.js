@@ -7,8 +7,8 @@
   let Users = db.Users;
 
   router.get('/:username', auth.isAuthenticated, (req, res) => {
-    if (req.user.dataValues.username === req.params.username){
-      return Users.findOne( { where: { username: req.user.dataValues.username }}, { raw: true })
+    if (req.user.username === req.params.username){
+      return Users.findOne( { where: { username: req.user.username }}, { raw: true })
       .then(user => {
         console.log(user.username);
         res.render(`users/index`, { user: user });
