@@ -27,8 +27,8 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/users',
-  failureRedirect: '/login',
+  successRedirect: `/Kirk`,
+  failureRedirect: '/main/login'
 }));
 
 
@@ -41,13 +41,15 @@ router.post('/register', (req, res) => {
         password: hash
       })
       .then( (user) => {
-        res.redirect('/gallery');
-      })
-      .catch(err => {
-        return res.sent('Stupid Username');
+        passport.authenticate('local', {
+          successRedirect: '/:username',
+          failureRedirect: '/main/login'});
+        })
+        .catch(err => {
+          return res.send(400, err.message);
+        });
       });
     });
   });
-});
 
-module.exports = router;
+  module.exports = router;

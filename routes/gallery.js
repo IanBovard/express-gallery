@@ -7,36 +7,29 @@ let db = require('../models');
 let Gallery = db.Galleries;
 let User = db.Users;
 
-router.get('/', auth.isAuthenticated, (req, res) => {
-  return Gallery.findAll( {where: {user_id: req.user.id}},{ raw:true })
-  .then(pictures => {
-    res.render('gallery/index', { gallery: pictures });
-  })
-  .catch(err => {
-   res.send(err.message);
- });
+router.get('/:username/gallery', auth.isAuthenticated, (req, res) => {
+  if (req.user.dataValues.username === req.params.username){
+    return Gallery.findAll( {where: {user_id: req.user.id}},{ raw: true })
+    .then(pictures => {
+      let username = req.user.dataValues.username;
+      res.render('gallery/index', { gallery: pictures, username: username });
+    })
+    .catch(err => {
+     res.send(err.message);
+   });
+  }else{
+    res.send(400, "Bad request");
+  }
 });
 
-router.get('/new', auth.isAuthenticated, (req, res) => {
-  res.render('gallery/new');
+router.get('/:username/gallery/new', auth.isAuthenticated, (req, res) => {
+  if (req.user.dataValues.username === req.params.username){
+    let username = req.user.dataValues.username;
+    res.render('gallery/new', { username: username });
+  }
 });
 
-router.get('/:id/edit', auth.isAuthenticated, (req, res) => {
-  let id = req.params.id;
-  return Gallery.findById(id, {raw:true})
-  .then(picture => {
-    if (picture !== null){
-      res.render('gallery/edit', picture);
-    }else{
-      res.send(400, 'Bad Request');
-    }
-  })
-  .catch(err => {
-    res.send(err.message);
-  });
-});
-
-router.get('/:id', auth.isAuthenticated, (req, res) => {
+router.get('/:username/gallery/:id', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id, {raw:true})
   .then(picture => {
@@ -51,7 +44,23 @@ router.get('/:id', auth.isAuthenticated, (req, res) => {
   });
 });
 
-router.post('/new', auth.isAuthenticated, (req, res) => {
+router.get('/:username/gallery/:id/edit', auth.isAuthenticated, (req, res) => {
+  let id = req.params.id;
+  return Gallery.findById(id, {raw:true})
+  .then(picture => {
+    if (picture !== null){
+      res.render('gallery/edit', picture);
+    }else{
+      res.send(400, 'Bad Request');
+    }
+  })
+  .catch(err => {
+    res.send(err.message);
+  });
+});
+
+
+router.post('/:username/gallery/new', auth.isAuthenticated, (req, res) => {
   return Gallery.create({ user_id: req.user.id, author: req.body.author, link: req.body.link, description: req.body.description })
   .then(picture => {
     res.redirect('/gallery');
@@ -61,7 +70,8 @@ router.post('/new', auth.isAuthenticated, (req, res) => {
   });
 });
 
-router.put('/:id', auth.isAuthenticated, (req, res) => {
+router.put('/:username/gallery/:id/edit', auth.isAuthenticated, (req, res) => {
+  let username = req.params.username;
   let id = req.params.id;
   return Gallery.findById(id)
   .then(picture => {
@@ -71,14 +81,14 @@ router.put('/:id', auth.isAuthenticated, (req, res) => {
     }
   })
   .then(picture => {
-    res.redirect(`/gallery/${id}`);
+    res.redirect(`/${username}/gallery/${id}`);
   })
   .catch(err => {
     res.send(err.message);
   });
 });
 
-router.delete('/:id', auth.isAuthenticated, (req, res) => {
+router.delete('/:username/gallery/:id/delete', auth.isAuthenticated, (req, res) => {
   let id = req.params.id;
   return Gallery.findById(id)
   .then(picture => {

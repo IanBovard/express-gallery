@@ -1,10 +1,10 @@
-<h1>THIS IS THE USER PAGE!</h1>
-<form action="/gallery">
+<h1>Hi {{user.username}} this is your profile page</h1>
+<form action="/{{user.username}}/gallery">
   <button type="submit">View your photos</button>
 </form>
-<form action="/gallery/new">
+<form action="{{user.username}}/gallery/new">
   <button type="submit">Post a new picture</button>
 </form>
-<form action="/logout" method="GET">
+<form action="/main/logout" method="GET">
   <button type="submit">Logout</button>
 </form>

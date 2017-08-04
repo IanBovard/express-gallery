@@ -1,7 +1,7 @@
-<h1>THESE ARE PICTURES!!!</h1>
+<h1>THESE ARE {{username}}'s PICTURES!!!</h1>
 {{#each gallery}}
 <div class="container">
-  <form action="/gallery/{{id}}">
+  <form action="/{{username}}/gallery/{{id}}">
     <button type="submit">{{id}}</button>
   </form>
   <div class="author">{{author}}</div>
@@ -9,12 +9,12 @@
   <div class="description">{{description}}</div>
 </div>
 {{/each}}
-<form action="/gallery/new">
+<form action="/{{username}}/gallery/new">
   <button type="submit">Post new picture</button>
 </form>
-<form action="/users">
-  <button type="submit">Back to user page</button>
+<form action="/{{username}}">
+  <button type="submit">Back to your page</button>
 </form>
-<form action="/logout">
+<form action="/main/logout">
   <button type="submit">logout</button>
 </form>

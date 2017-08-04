@@ -79,10 +79,10 @@ passport.deserializeUser((userId, cb) => {
   });
 });
 
-app.use('/users', userRoutes);
-app.use('/gallery', galleryRoutes);
 app.use('/main', authRoutes);
 app.use('/main', visitorRoutes);
+app.use('/', userRoutes);
+app.use('/', galleryRoutes);
 
 app.listen(PORT, () => {
   //db.sequelize.sync();
