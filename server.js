@@ -54,12 +54,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser((user, cb) => {
-  cb(null, user.id);
+  console.log('serializing');
+  return cb(null, user.id);
 });
 
 passport.deserializeUser((userId, cb) => {
+  console.log('deserializing');
   Users.findById(userId).then(user =>{
-    cb(null, user);
+    return cb(null, user);
   });
 });
 
@@ -67,8 +69,6 @@ app.use('/users', userRoutes);
 app.use('/gallery', galleryRoutes);
 app.use('/', authRoutes);
 app.use('/home', visitorRoutes);
-
-
 
 app.listen(PORT, () => {
   db.sequelize.sync();
