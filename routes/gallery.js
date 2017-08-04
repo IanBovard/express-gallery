@@ -29,7 +29,7 @@ router.get('/:username/gallery/new', auth.isAuthenticated, (req, res) => {
   }
 });
 
-router.get('/:username/gallery/:id', auth.isAuthenticated, (req, res) => {
+router.get('/:username/gallery/:id',(req, res) => {
   let id = req.params.id;
   let username = req.user.username;
   return Gallery.findById(id, {raw:true})
