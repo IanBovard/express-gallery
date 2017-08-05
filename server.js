@@ -5,10 +5,9 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const PORT = process.env.PORT || 8080;
 
-const userRoutes = require('./routes/users');
-const galleryRoutes = require('./routes/gallery');
-const authRoutes = require('./routes/auth');
-const visitorRoutes = require('./routes/visitors');
+const userRoutes = require('./routes/userRequests');
+const authRoutes = require('./routes/authorizeUser');
+const visitorRoutes = require('./routes/visitorRequests');
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -26,8 +25,6 @@ const hbs = exphbs.create({
   defaultLayout :'main',
   extname : 'hbs'
 });
-
-app.use(express.static('public'));
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
@@ -79,12 +76,11 @@ passport.deserializeUser((userId, cb) => {
   });
 });
 
-app.use('/main', authRoutes);
-app.use('/main', visitorRoutes);
-app.use('/', userRoutes);
-app.use('/', galleryRoutes);
+app.use('/', authRoutes);
+app.use('/', visitorRoutes);
+app.use('/users', userRoutes);
 
 app.listen(PORT, () => {
-  //db.sequelize.sync();
+  db.sequelize.sync();
   console.log(`server running on ${PORT}`);
 });

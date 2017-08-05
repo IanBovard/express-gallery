@@ -1,10 +1,25 @@
-<h1>Hi {{user.username}} this is your profile page</h1>
-<form action="/{{user.username}}/gallery">
-  <button type="submit">View your photos</button>
-</form>
-<form action="{{user.username}}/gallery/new">
-  <button type="submit">Post a new picture</button>
-</form>
-<form action="/main/logout" method="GET">
-  <button type="submit">Logout</button>
-</form>
+{{#if username}}
+<h3>Welcome {{username}}!</h3>
+<div>
+  <a href="/userlist">Member list</a>
+</div>
+<div>
+  <a href="/logout">Logout</a>
+</div>
+{{else}}
+<h3>Welcome!</h3>
+<div>
+  <a href="/userlist">Member list</a>
+</div>
+<div>
+  <a href="/login">Login</a>
+</div>
+<div>
+  <a href="/register">Create an account</a>
+</div>
+<div>
+  <a href="/logout">Logout</a>
+</div>
+{{/if}}
+
+

@@ -10,27 +10,21 @@ let db = require('../models');
 let Users = db.Users;
 let Gallery = db.Galleries;
 
+//authorize routes ::
+//-(GET, POST)/login-(GET, POST)/register
+
 router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
-router.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/main/login');
-});
-
 router.get('/register', (req, res) => {
-  if (req.user){res.redirect('/users');
-}else{
   res.render('auth/register');
-}
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: `/Kirk`,
-  failureRedirect: '/main/login'
+  successRedirect: '/',
+  failureRedirect: '/login'
 }));
-
 
 router.post('/register', (req, res) => {
   let { username, password } = req.body;
@@ -39,17 +33,22 @@ router.post('/register', (req, res) => {
       Users.create({
         username: username,
         password: hash
-      })
-      .then( (user) => {
-        passport.authenticate('local', {
-          successRedirect: '/:username',
-          failureRedirect: '/main/login'});
-        })
-        .catch(err => {
-          return res.send(400, err.message);
+      }).then(user => {
+        req.login(user, (err) => {
+          if (err) {return next(err);}
+          return res.redirect('/');
         });
+      })
+      .catch(err => {
+        return res.send(400, err.message);
       });
     });
   });
+});
 
-  module.exports = router;
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+module.exports = router;
