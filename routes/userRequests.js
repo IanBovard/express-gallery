@@ -23,9 +23,9 @@ router.get('/:username', (req, res) => {
         else if (req.user.username === path) { return res.render('gallery/index', { gallery: gallery, authUser: user });}
       })
     .catch(err => {
-        res.send(400, err.message);
-      });
+      res.send(400, err.message);
     });
+  });
 });
 
 router.get('/:username/new', (req, res) => {
@@ -60,9 +60,9 @@ router.get('/:username/:pictureId', (req, res) => {
         else if (req.user.username === path) { return res.render('gallery/picture', { picture: picture, authUser: user });}
       })
     .catch(err => {
-        res.send(400, err.message);
-      });
+      res.send(400, err.message);
     });
+  });
 });
 
 router.post('/:username/new', auth.isAuthenticated, (req, res) => {
@@ -79,6 +79,26 @@ router.post('/:username/new', auth.isAuthenticated, (req, res) => {
       res.redirect(`/users/${name}`);
     })
     .catch(err => {
+      res.send(400, err.message);
+    });
+  }
+});
+
+router.put('/:username/:pictureId/edit', auth.isAuthenticated, (req, res) => {
+  let path = req.params.username;
+  let pathId = req.params.pictureId;
+  if (req.user.username === path){
+    let name = req.user.username;
+    return Gallery.findById(pathId).then(picture => {
+      picture.update( {
+        author: req.body.author,
+        link: req.body.link,
+        description: req.body.description
+      });
+      return picture;
+    }).then(picture => {
+      res.redirect(`/users/${name}/${pathId}`);
+    }).catch(err => {
       res.send(400, err.message);
     });
   }

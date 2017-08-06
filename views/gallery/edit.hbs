@@ -1,1 +1,10 @@
-<h3>edit the photo</h3>
+<h3>Edit Away {{user}}</h3>
+<form action="/users/{{user}}/{{picture.id}}/edit?_method=PUT" method="POST">
+  Author:
+  <input type="text" name="author" placeholder="{{picture.author}}" value="{{picture.author}}"><br>
+  url:
+  <input type="text" name="link" placeholder="{{picture.link}}" value="{{picture.link}}"><br>
+  Description:
+  <input type="text" name="description" placeholder="{{picture.description}}" value="{{picture.description}}"><br>
+  <button type="submit">Submit Changes</button>
+</form>
