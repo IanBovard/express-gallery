@@ -5,7 +5,7 @@ const auth = require('../utilities/authenticate.js');
 const passport = require('passport');
 const saltRounds = 10;
 const bcrypt = require('bcrypt');
-
+const { photoMetas } = require('../collections');
 let db = require('../models');
 let Users = db.Users;
 let Gallery = db.Galleries;
@@ -66,6 +66,7 @@ router.get('/:username/:pictureId', (req, res) => {
 });
 
 router.post('/:username/new', auth.isAuthenticated, (req, res) => {
+  if( !req.body.meta ) req.body.meta = { meta : "is working" };
   let path = req.params.username;
   if (req.user.username === path){
     let name = req.user.username;
@@ -74,12 +75,16 @@ router.post('/:username/new', auth.isAuthenticated, (req, res) => {
       author: req.body.author,
       link: req.body.link,
       description: req.body.description
+    }).then(picture => {
+      req.body.meta.pictureId = picture.id;
+      return photoMetas().insert(req.body.meta);
     })
     .then(picture => {
-      res.redirect(`/users/${name}`);
+      console.log(picture);
+      return res.redirect(`/users/${name}`);
     })
     .catch(err => {
-      res.send(400, err.message);
+      return res.send(400, err.message);
     });
   }
 });

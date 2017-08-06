@@ -33,6 +33,8 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+
 app.use(session({
   store: new RedisStore(),
   secret: 'keyboard cat',
