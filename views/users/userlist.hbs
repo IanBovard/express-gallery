@@ -1,6 +1,35 @@
 <h3>List of users</h3>
-{{#each users}}
+{{#if authUsers}}
 <div>
-<a href="/users/{{username}}">{{username}}'s gallery</a>
+  <div>
+    <a href="/">Return to Home</a>
+  </div>
+  <div>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+{{#each authUsers}}
+<div>
+  <a href="/users/{{username}}">{{username}}'s gallery</a>
 </div>
 {{/each}}
+{{/if}}
+
+{{#if users}}
+<div>
+  <div>
+    <a href="/">Return to Home</a>
+  </div>
+  <div>
+    <a href="/login">Login</a>
+  </div>
+  <div>
+    <a href="/register">Create an Account</a>
+  </div>
+</div>
+{{#each users}}
+<div>
+  <a href="/users/{{username}}">{{username}}'s gallery</a>
+</div>
+{{/each}}
+{{/if}}

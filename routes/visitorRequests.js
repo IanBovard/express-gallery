@@ -5,40 +5,30 @@ const auth = require('../utilities/authenticate.js');
 const passport = require('passport');
 const saltRounds = 10;
 const bcrypt = require('bcrypt');
-
 let db = require('../models');
 let Users = db.Users;
 let Gallery = db.Galleries;
 
-//visitor routes -- / -- /userlist -- /login -- /register
-
 router.get('/', (req, res) => {
-  if (!req.user) { res.render('users/index'); }
+  if (!req.user) { return res.render('users/index'); }
   if (req.user) {
     let username = req.user.username;
     return Users.findOne( {where: { username: username}})
     .then(user => {
-      res.render('users/index', { username: username});
+      return res.render('users/index', { username: username});
+    }).catch(err => {
+      return res.send(400, err.message);
     });
   }
 });
 
-
 router.get('/userlist', (req, res) => {
-  return Users.findAll( {raw: true} ).then(users => {
-    res.render('users/userlist', { users: users});
-
+  return Users.findAll().then(users => {
+    if (!req.user) { return res.render('users/userlist', { users: users });}
+    if(req.user) { return res.render('users/userlist', { authUsers: users});}
+  }).catch(err => {
+    return res.send(400, err.message);
   });
 });
 
 module.exports = router;
-
-
-/*router.get('/', (req, res) => {
-  return Users.findOne ( { where: { username: username }},{ raw: true}).then(user => {
-    if (!user) { res.render('users/index');}
-    if (user) {
-      let username = req.user.username;
-      res.render('users/index', { username: username } );}
-    });
-});*/

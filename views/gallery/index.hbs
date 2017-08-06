@@ -1,1 +1,62 @@
-<h3>this is the gallery</h3>
+{{#if authUser}}
+<h3>Hi {{authUser.username}}! Here is your gallery</h3>
+{{#each gallery}}
+<div>
+  <div>
+    <a href="/users/{{../authUser.username}}/{{id}}">
+      {{id}}
+      <img src="" alt="This is where the the picture goes">
+    </a>
+  </div>
+  <div>
+    <div>
+      <a href="/users/{{../authUser.username}}/{{id}}/edit">Edit</a>
+    </div>
+    <div>
+      <a href="/users/{{../authUser.username}}/{{id}}/delete">Delete</a>
+    </div>
+  </div>
+</div>
+{{/each}}
+<div>
+  <div>
+    <a href="/users/{{authUser.username}}/new">Post a new picture</a>
+  </div>
+  <div>
+    <a href="/userlist">Back to Users</a>
+  </div>
+  <div>
+    <a href="/">Back to Home</a>
+  </div>
+  <div>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+{{/if}}
+{{#if user}}
+<h3>Welcome to {{user.username}}'s gallery</h3>
+{{#each gallery}}
+<div>
+  <div>
+    <a href="/users/{{../user.username}}/{{id}}">
+      {{id}}
+      <img src="" alt="This is where the the picture goes">
+    </a>
+  </div>
+</div>
+{{/each}}
+<div>
+  <div>
+    <a href="/userlist">Back to Users</a>
+  </div>
+  <div>
+    <a href="/">Back to Home</a>
+  </div>
+  <div>
+    <a href="/login">Login</a>
+  </div>
+  <div>
+    <a href="/register">Create an account</a>
+  </div>
+</div>
+{{/if}}

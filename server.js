@@ -59,7 +59,7 @@ passport.use(new LocalStrategy (
     })
     .catch(err => { console.log('error: ', err.mesage); });
   }
-));
+  ));
 
 app.use(passport.initialize());
 app.use(passport.session());

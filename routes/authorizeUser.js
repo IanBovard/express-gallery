@@ -10,15 +10,12 @@ let db = require('../models');
 let Users = db.Users;
 let Gallery = db.Galleries;
 
-//authorize routes ::
-//-(GET, POST)/login-(GET, POST)/register
-
 router.get('/login', (req, res) => {
-  res.render('auth/login');
+  return res.render('auth/login');
 });
 
 router.get('/register', (req, res) => {
-  res.render('auth/register');
+  return res.render('auth/register');
 });
 
 router.post('/login', passport.authenticate('local', {
@@ -48,7 +45,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
+  return res.redirect('/');
 });
 
 module.exports = router;
