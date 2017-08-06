@@ -13,7 +13,9 @@
       <a href="/users/{{../authUser.username}}/{{id}}/edit">Edit</a>
     </div>
     <div>
-      <a href="/users/{{../authUser.username}}/{{id}}/delete">Delete</a>
+    <form action="/users/{{../authUser.username}}/{{id}}/delete?_method=DELETE" method="POST">
+        <button type="submit">delete</button>
+      </form>
     </div>
   </div>
 </div>

@@ -14,12 +14,15 @@ let Gallery = db.Galleries;
 
 router.get('/:username', (req, res) => {
   let path = req.params.username;
-  return Users.findOne( { where: { username: path }}).then(user => {
-    return Gallery.findAll( { where: { user_id: user.id}}).then(gallery => {
+  return Users.findOne( { where: { username: path }})
+  .then(user => {
+    return Gallery.findAll( { where: { user_id: user.id}})
+    .then(gallery => {
       if (!req.user || req.user.username !== path) {
         return res.render('gallery/index', { gallery: gallery, user: user});}
         else if (req.user.username === path) { return res.render('gallery/index', { gallery: gallery, authUser: user });}
-      }).catch(err => {
+      })
+    .catch(err => {
         res.send(400, err.message);
       });
     });
@@ -49,18 +52,49 @@ router.get('/:username/:pictureId/edit', (req, res) => {
 router.get('/:username/:pictureId', (req, res) => {
   let path = req.params.username;
   let pathId = req.params.pictureId;
-  return Users.findOne( { where: { username: path }}).then(user => {
+  return Users.findOne( { where: { username: path }})
+  .then(user => {
     return Gallery.findById(pathId).then(picture => {
       if (!req.user || req.user.username !== path) {
         return res.render('gallery/picture', { picture: picture, user: user});}
         else if (req.user.username === path) { return res.render('gallery/picture', { picture: picture, authUser: user });}
-      }).catch(err => {
+      })
+    .catch(err => {
         res.send(400, err.message);
       });
     });
 });
 
-/*app.post('/:username/new', auth.isAuthenticated, (req, res) => {
+router.post('/:username/new', auth.isAuthenticated, (req, res) => {
+  let path = req.params.username;
+  if (req.user.username === path){
+    let name = req.user.username;
+    return Gallery.create( {
+      user_id: req.user.id,
+      author: req.body.author,
+      link: req.body.link,
+      description: req.body.description
+    })
+    .then(picture => {
+      res.redirect(`/users/${name}`);
+    })
+    .catch(err => {
+      res.send(400, err.message);
+    });
+  }
+});
 
-});*/
+router.delete('/:username/:pictureId/delete', auth.isAuthenticated, (req, res) => {
+  let path = req.params.username;
+  let pathId = req.params.pictureId;
+  if (req.user.username === path){
+    let name = req.params.username;
+    return Gallery.findById(pathId).then(picture => {
+      picture.destroy();
+      return res.redirect(`/users/${name}`);
+    }).catch(err => {
+      res.send(400, err.message);
+    });
+  }
+});
 module.exports = router;

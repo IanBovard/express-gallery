@@ -9,7 +9,9 @@
       <a href="/users/{{authUser.username}}/{{picture.id}}/edit">Edit</a>
     </div>
     <div>
-      <a href="/users/{{authUser.username}}/{{picture.id}}/delete">Delete</a>
+    <form action="/users/{{authUser.username}}/{{picture.id}}/delete?_method=DELETE" method="POST">
+        <button type="submit">delete</button>
+      </form>
     </div>
   </div>
 </div>
