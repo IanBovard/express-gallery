@@ -111,11 +111,14 @@ router.put('/:username/:pictureId/edit', auth.isAuthenticated, (req, res) => {
 
 router.delete('/:username/:pictureId/delete', auth.isAuthenticated, (req, res) => {
   let path = req.params.username;
-  let pathId = req.params.pictureId;
+  let pathId = parseInt(req.params.pictureId);
+  console.log(pathId);
   if (req.user.username === path){
     let name = req.params.username;
     return Gallery.findById(pathId).then(picture => {
       picture.destroy();
+      photoMetas().remove( { pictureId: { $eq: pathId } });
+    }).then( () => {
       return res.redirect(`/users/${name}`);
     }).catch(err => {
       res.send(400, err.message);
